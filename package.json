@@ -1,0 +1,22 @@
+{
+  "name": "node-blog",
+  "version": "1.0.0",
+  "description": "",
+  "main": "bin/www.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "cross-env NODE_ENV=dev nodemon ./bin/www.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "cross-env": "^5.2.1",
+    "nodemon": "^1.19.2",
+    "prettier": "1.18.2"
+  },
+  "dependencies": {
+    "formidable": "^1.2.1",
+    "qs": "^6.8.0"
+  }
+}
