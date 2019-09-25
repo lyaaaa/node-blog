@@ -1,6 +1,6 @@
-const getUser = () => {
+const getUser = (data) => {
   return {
-    name: '测试用户名',
+    name: `${data.account}`,
     id: 001
   }
 }

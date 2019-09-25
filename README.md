@@ -9,3 +9,5 @@ node开发博客类demo
 ```
 npm install && npm run dev
 ```
+
+运行成功后自动打开 http://localhost:8000/pages/login.html (登录页) 

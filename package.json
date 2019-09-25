@@ -4,19 +4,32 @@
   "description": "",
   "main": "bin/www.js",
   "scripts": {
+    "build": "webpack --config ./build/webpack.config.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "cross-env NODE_ENV=dev nodemon ./bin/www.js"
+    "dev": "webpack-dev-server"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-preset-env": "^1.7.0",
     "cross-env": "^5.2.1",
+    "css-loader": "^3.2.0",
+    "html-webpack-plugin": "^3.2.0",
+    "mini-css-extract-plugin": "^0.8.0",
     "nodemon": "^1.19.2",
-    "prettier": "1.18.2"
+    "prettier": "1.18.2",
+    "style-loader": "^1.0.0",
+    "webpack-cli": "^3.3.9",
+    "webpack-dev-server": "^3.8.1"
   },
   "dependencies": {
+    "axios": "^0.19.0",
+    "babel": "^6.23.0",
     "formidable": "^1.2.1",
-    "qs": "^6.8.0"
+    "qs": "^6.8.0",
+    "webpack": "^4.40.2"
   }
 }

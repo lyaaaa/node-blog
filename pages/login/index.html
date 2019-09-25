@@ -9,27 +9,22 @@
   <body>
     <div class="content">
       <form id="loginForm">
-        <input type="text" id="account" name="account" placeholder="请输入账号" />
-        <input type="password" id="password" name="password" placeholder="请输入密码" />
+        <input
+          type="text"
+          id="account"
+          name="account"
+          placeholder="请输入账号"
+        />
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="请输入密码"
+        />
         <input type="button" value="登录" onclick="login()" />
       </form>
     </div>
   </body>
-  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-  <script>
-    function login() {
-      const account = document.getElementById('account').value
-      const password = document.getElementById('password').value
-      axios.post('/api/user/login', {
-        account,
-        password
-      }).then(res => {
-        console.log('res', res)
-      }).catch(err => {
-        console.log('err', err)
-      })
-    }
-  </script>
   <style>
     .content {
       display: flex;
