@@ -1,18 +1,15 @@
-const handleBlogRouter = require('./src/router/blog')
-const handleUserRouter = require('./src/router/user')
-const handlePageRouter = require('./src/router/pageRoute')
-const mime = require('./src/util/mime')
+const handleBlogRouter = require('./router/blog')
+const handleUserRouter = require('./router/user')
+const mime = require('./util/mime')
 
 const serverHandle = (req, res) => {
   const url = req.url
+  console.log(url)
   res.setHeader('Content-type', mime(url))
   req.path = url.split('?')[0]
   const blogData = handleBlogRouter(req, res)
   const userData = handleUserRouter(req, res)
-  if (url.match('pages')) {
-    handlePageRouter(req, res)
-    return
-  } else if (url.match('api')) {
+  if (url.match('api')) {
     if (blogData) {
       res.end(JSON.stringify(blogData))
       return
@@ -24,7 +21,8 @@ const serverHandle = (req, res) => {
       return
     }
   }
-  res.end('404 Not Found')
+  res.end()
+  // res.end('404 Not Found')
 }
 
 module.exports = serverHandle
