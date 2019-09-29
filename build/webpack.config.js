@@ -66,6 +66,12 @@ module.exports = {
     port: 8080,
     inline: true,
     hot: true,
-    host: 'localhost'
+    host: 'localhost',
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3000',
+        pathRewrite: {'^/api' : ''}
+      }
+    }
   }
 }

@@ -4,7 +4,6 @@ const mime = require('./util/mime')
 
 const serverHandle = (req, res) => {
   const url = req.url
-  console.log(url)
   res.setHeader('Content-type', mime(url))
   req.path = url.split('?')[0]
   const blogData = handleBlogRouter(req, res)
