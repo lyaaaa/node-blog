@@ -5,8 +5,9 @@ const handleBlogRouter = (req, res) => {
   const method = req.method
   // 获取博客列表
   if (method === 'GET' && req.path === '/api/blog/list') {
-    const list = getList()
-    return new SuccessModel(list)
+    return getList().then(list => {
+      return new SuccessModel(list)
+    })
   }
 }
 

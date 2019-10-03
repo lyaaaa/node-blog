@@ -10,7 +10,9 @@ const serverHandle = (req, res) => {
   const userData = handleUserRouter(req, res)
   if (url.match('api')) {
     if (blogData) {
-      res.end(JSON.stringify(blogData))
+      blogData.then(data => {
+        res.end(JSON.stringify(data))
+      })
       return
     }
     if (userData) {

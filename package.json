@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack --config ./build/webpack.config.js",
     "dev": "webpack-dev-server --config ./build/webpack.config.js --hot",
-    "server": "cross-env NODE_ENV=production nodemon ./server/bin/www.js",
+    "server": "cross-env NODE_ENV=dev nodemon ./server/bin/www.js",
     "start": "npm run server & npm run dev"
   },
   "keywords": [],
@@ -31,6 +31,7 @@
     "axios": "^0.19.0",
     "babel": "^6.23.0",
     "formidable": "^1.2.1",
+    "mysql": "^2.17.1",
     "qs": "^6.8.0",
     "webpack": "^4.40.2"
   }

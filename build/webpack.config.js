@@ -7,7 +7,8 @@ module.exports = {
   entry: {
     blog: './pages/blog/index.js',
     home: './pages/home/index.js',
-    login: './pages/login/index.js'
+    login: './pages/login/index.js',
+    register: './pages/register/index.js'
   },
   mode: 'development',
   output: {
@@ -30,6 +31,11 @@ module.exports = {
       template: './pages/home/index.html',
       filename: 'html/home.html',
       chunks: ['home']
+    }),
+    new HtmlWebpackPlugin({
+      template: './pages/register/index.html',
+      filename: 'html/register.html',
+      chunks: ['register']
     }),
     new MiniCssExtractPlugin({
       filename: 'css/[name].css',
