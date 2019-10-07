@@ -2,11 +2,11 @@
   "name": "node-blog",
   "version": "1.0.0",
   "description": "",
-  "main": "bin/www.js",
+  "main": "bin/www",
   "scripts": {
     "build": "webpack --config ./build/webpack.config.js",
     "dev": "webpack-dev-server --config ./build/webpack.config.js --hot",
-    "server": "cross-env NODE_ENV=dev nodemon ./server/bin/www.js",
+    "server": "cross-env NODE_ENV=dev nodemon ./server/bin/www",
     "start": "npm run server & npm run dev"
   },
   "keywords": [],
