@@ -1,6 +1,11 @@
 import './index.css'
 import axios from 'axios'
 
+axios.get('/api/user/loginCheck').then(res => {
+  if (res.data.code === 0) {
+    window.location.href = '/html/home.html'
+  }
+})
 const loginBtn = document.getElementById('login')
 const registerBtn = document.getElementById('register')
 loginBtn.addEventListener('click', () => {
@@ -12,7 +17,9 @@ loginBtn.addEventListener('click', () => {
       password
     })
     .then(res => {
-      console.log('res', res)
+      if (res.data.code === 0) {
+        window.location.href = '/html/home.html'
+      }
     })
     .catch(err => {
       console.log('err', err)
