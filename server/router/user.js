@@ -6,14 +6,16 @@ const handleUserRouter = async (req, res) => {
   const method = req.method
   // 登录
   if (method === 'POST' && req.path === '/api/user/login') {
-    return getPostData(req).then(data => {
-      if (data.account && data.password) {
-        const userData = getUser(data)
+    try {
+      const postData = await getPostData(req)
+      if (postData.account && postData.password) {
+        const userData = await getUser(postData, req)
         return new SuccessModel(userData)
-      } else {
-        return new ErrorModel('登录失败')
       }
-    })
+    } catch(err) {
+      console.log('err', err)
+      return new ErrorModel('登录失败')
+    }
   }
   // 注册功能
   if (method === 'POST' && req.path === '/api/user/register') {
