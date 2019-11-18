@@ -2,21 +2,36 @@ const webpack = require('webpack')
 const path = require('path')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 
 module.exports = {
   entry: {
     blog: './pages/blog/index.js',
     home: './pages/home/index.js',
     login: './pages/login/index.js',
-    register: './pages/register/index.js'
+    register: './pages/register/index.js',
+    vendor: ['jquery']
   },
   mode: 'development',
   output: {
     path: path.resolve(__dirname, '../dist'),
-    filename: 'js/[name].js',
+    filename: 'js/[name].[hash].js',
     publicPath: '/'
   },
   plugins: [
+    new CleanWebpackPlugin(),
+    new UglifyJsPlugin(),
+    new OptimizeCSSAssetsPlugin({
+      assetNameRegExp: /\.css$/g,
+      cssProcessor: require('cssnano')
+    }),
+    new webpack.ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jquery'
+    }),
+    new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
       template: './pages/blog/index.html',
       filename: 'html/blog.html',
@@ -38,7 +53,7 @@ module.exports = {
       chunks: ['register']
     }),
     new MiniCssExtractPlugin({
-      filename: 'css/[name].css',
+      filename: 'css/[name].[contenthash:8].css',
       chunkFilename: '[id].css',
       ignoreOrder: false
     })
@@ -76,7 +91,7 @@ module.exports = {
     proxy: {
       '/api': {
         target: 'http://localhost:3000',
-        pathRewrite: {'^/' : ''}
+        pathRewrite: { '^/': '' }
       }
     }
   }
