@@ -1,5 +1,6 @@
 import './index.css'
 import axios from 'axios'
+import $ from 'jquery'
 
 $('#register').on('click', () => {
   const account = $('#account').val()

@@ -1,6 +1,6 @@
 import './index.css'
 import axios from 'axios'
-import $ from 'jquery'
+// import $ from 'jquery'
 
 axios.get('/api/user/loginCheck').then(res => {
   if (res.data.code === 0) {
