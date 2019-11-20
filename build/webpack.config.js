@@ -20,6 +20,16 @@ module.exports = {
     filename: 'js/[name].[hash].js',
     publicPath: '/'
   },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          priority: -10
+        }
+      }
+    }
+  },
   plugins: [
     new CleanWebpackPlugin(),
     new UglifyJsPlugin(),
