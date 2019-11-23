@@ -11,8 +11,7 @@ module.exports = {
     blog: './pages/blog/index.js',
     home: './pages/home/index.js',
     login: './pages/login/index.js',
-    register: './pages/register/index.js',
-    vendor: ['jquery']
+    register: './pages/register/index.js'
   },
   mode: 'development',
   output: {
@@ -26,12 +25,21 @@ module.exports = {
     },
     splitChunks: {
       cacheGroups: {
-        vendor: {
-          test: /node_modules/,
-          chunks: 'initial',
+        common: {
+          name: 'common',
+          chunks: 'all',
+          minSize: 1,
+          priority: 0
+        },
+        vendors: {
           name: 'vendor',
-          priority: 10,
-          enforce: true
+          priority: -10,
+          test: /[\\/]node_modules[\\/]/
+        },
+        default: {
+          minChunks: 2,
+          priority: -20,
+          reuseExistingChunk: true
         }
       }
     }
@@ -43,30 +51,26 @@ module.exports = {
       assetNameRegExp: /\.css$/g,
       cssProcessor: require('cssnano')
     }),
-    // new webpack.ProvidePlugin({
-    //   $: 'jquery',
-    //   jQuery: 'jquery'
-    // }),
     new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
       template: './pages/blog/index.html',
       filename: 'html/blog.html',
-      chunks: ['blog']
+      chunks: ['blog', 'manifest', 'vendors', 'common']
     }),
     new HtmlWebpackPlugin({
       template: './pages/login/index.html',
       filename: 'html/login.html',
-      chunks: ['login']
+      chunks: ['login', 'manifest', 'vendors', 'common']
     }),
     new HtmlWebpackPlugin({
       template: './pages/home/index.html',
       filename: 'html/home.html',
-      chunks: ['home']
+      chunks: ['home', 'manifest', 'vendors', 'common']
     }),
     new HtmlWebpackPlugin({
       template: './pages/register/index.html',
       filename: 'html/register.html',
-      chunks: ['register']
+      chunks: ['register', 'manifest', 'vendors', 'common']
     }),
     new MiniCssExtractPlugin({
       filename: 'css/[name].[contenthash:8].css',

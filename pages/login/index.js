@@ -1,6 +1,8 @@
 import './index.css'
 import axios from 'axios'
+import $ from 'jquery'
 
+console.log($('#login'))
 axios.get('/api/user/loginCheck').then(res => {
   if (res.data.code === 0) {
     window.location.href = '/html/home.html'
