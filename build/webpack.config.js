@@ -3,17 +3,19 @@ const path = require('path')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+  .BundleAnalyzerPlugin
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 
 module.exports = {
+  mode: 'development',
   entry: {
     blog: './pages/blog/index.js',
     home: './pages/home/index.js',
     login: './pages/login/index.js',
     register: './pages/register/index.js'
   },
-  mode: 'development',
   output: {
     path: path.resolve(__dirname, '../dist'),
     filename: 'js/[name].[hash].js',
@@ -25,6 +27,7 @@ module.exports = {
     },
     splitChunks: {
       cacheGroups: {
+        chunks: 'async',
         common: {
           name: 'common',
           chunks: 'all',
@@ -32,8 +35,9 @@ module.exports = {
           priority: 0
         },
         vendors: {
-          name: 'vendor',
-          priority: -10,
+          name: "vendors",
+          chunks: "all",
+          priority: 10,
           test: /[\\/]node_modules[\\/]/
         },
         default: {
@@ -45,6 +49,7 @@ module.exports = {
     }
   },
   plugins: [
+    new BundleAnalyzerPlugin(),
     new CleanWebpackPlugin(),
     new UglifyJsPlugin(),
     new OptimizeCSSAssetsPlugin({
@@ -80,6 +85,12 @@ module.exports = {
   ],
   module: {
     rules: [
+      {
+        test: /\.(png|jpg|gif)$/,
+        use: {
+          loader: 'file-loader'
+        }
+      },
       {
         test: /\.js$/,
         exclude: /(node_modules|bower_components)/,
