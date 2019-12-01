@@ -3,9 +3,9 @@ const getUser = (data, username) => {
   const s = '`password`'
   let sql
   if (username) {
-    sql = `select * from users where username='${username}';`
+    sql = `select id, username, realname from users where username='${username}';`
   } else {
-    sql = `select * from users where username='${data.account}' and ${s}='${data.password}';`
+    sql = `select id, username, realname from users where username='${data.account}' and ${s}='${data.password}';`
   } 
   return exec(sql)
 }
