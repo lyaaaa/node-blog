@@ -9,6 +9,12 @@ const handleBlogRouter = (req, res) => {
       return new SuccessModel(list)
     })
   }
+  // 获取我的博客
+  if (method === 'GET' && req.path === '/api/blog/myblog') {
+    return getList(req.session.username).then(list => {
+      return new SuccessModel(list)
+    })
+  }
 }
 
 module.exports = handleBlogRouter

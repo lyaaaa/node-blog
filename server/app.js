@@ -25,6 +25,7 @@ const serverHandle = (req, res) => {
     req.cookie[key] = val
   })
   let userId = req.cookie.userid
+  console.log('userId', userId, SESSION_DATA)
   if (userId) {
     if (!SESSION_DATA[userId]) {
       SESSION_DATA[userId] = {}

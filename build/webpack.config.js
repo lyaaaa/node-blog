@@ -31,12 +31,13 @@ module.exports = {
         common: {
           name: 'common',
           chunks: 'all',
+          minChunks: 2,
           minSize: 1,
           priority: 0
         },
         vendors: {
-          name: "vendors",
-          chunks: "all",
+          name: 'vendors',
+          chunks: 'all',
           priority: 10,
           test: /[\\/]node_modules[\\/]/
         },
@@ -49,8 +50,8 @@ module.exports = {
     }
   },
   plugins: [
-    new BundleAnalyzerPlugin(),
     new CleanWebpackPlugin(),
+    new BundleAnalyzerPlugin(),
     new UglifyJsPlugin(),
     new OptimizeCSSAssetsPlugin({
       assetNameRegExp: /\.css$/g,
@@ -93,9 +94,14 @@ module.exports = {
       },
       {
         test: /\.js$/,
-        exclude: /(node_modules|bower_components)/,
+        exclude: /node_modules/,
         use: {
-          loader: 'babel-loader'
+          loader: 'babel-loader',
+          options: {
+            presets: [['@babel/preset-env', {
+              useBuiltIns: 'usage'
+            }]]
+          }
         }
       },
       {

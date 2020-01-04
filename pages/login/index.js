@@ -1,12 +1,18 @@
 import './index.css'
 import axios from 'axios'
-import $ from 'jquery'
 
-console.log($('#login'))
 axios.get('/api/user/loginCheck').then(res => {
   if (res.data.code === 0) {
     window.location.href = '/html/home.html'
   }
+})
+function testPromise() {
+  return new Promise((resolve, reject) => {
+    resolve(12313)
+  })
+}
+testPromise().then(res => {
+  console.log(res)
 })
 const loginBtn = document.getElementById('login')
 const registerBtn = document.getElementById('register')
