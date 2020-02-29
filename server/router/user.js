@@ -1,40 +1,43 @@
-const { getPostData } = require('../util/apiUtil')
-const { getUser, registerUser } = require('../controller/user')
+const express = require('express')
+const router = express.Router()
 const { SuccessModel, ErrorModel } = require('../model/index')
+const { getUser, registerUser } = require('../controller/user')
+const { getToken, getUserByToken, getTokenByData } = require('../util/token')
 
-const handleUserRouter = async (req, res) => {
-  const method = req.method
-  // 登录
-  if (method === 'POST' && req.path === '/api/user/login') {
-    try {
-      const postData = await getPostData(req)
-      if (postData.account && postData.password) {
-        const userData = await getUser(postData)
-        // 设置sessionData
-        req.session.username = userData[0].username
-        return new SuccessModel(userData[0])
-      }
-    } catch (err) {
-      return new ErrorModel('登录失败')
-    }
+// 用户登录
+router.post('/api/user/login', async (req, res) => {
+  try {
+    const user = await getUser(req.body)
+    const token = getTokenByData(user)
+    user.token = token
+    res.send(new SuccessModel(user))
+  } catch (err) {
+    res.send(new ErrorModel(err))
   }
-  // 注册功能
-  if (method === 'POST' && req.path === '/api/user/register') {
-    const { account, password } = await getPostData(req)
-    return registerUser(account, password).then(() => {
-      return new SuccessModel({
-        msg: '注册成功'
-      })
+})
+
+// 获取用户信息
+router.get('/api/user/getUser', (req, res) => {
+  const token = getToken(req)
+  const user = getUserByToken(token)
+  if (user.id) {
+    res.send(new SuccessModel(user))
+  } else {
+    res.send({
+      code: 401,
+      message: user.message
     })
   }
-  // 判断登录状态
-  if (method === 'GET' && req.path === '/api/user/loginCheck') {
-    if (req.session.username) {
-      const userInfo = await getUser('', req.session.username)
-      return new SuccessModel(userInfo[0])
-    }
-    return new ErrorModel('尚未登录')
-  }
-}
+})
 
-module.exports = handleUserRouter
+// 用户注册
+router.post('/api/user/register', async (req, res) => {
+  try {
+    const data = await registerUser(req.body)
+    res.send(new SuccessModel(data))
+  } catch (err) {
+    res.send(new ErrorModel(err))
+  }
+})
+
+module.exports = router

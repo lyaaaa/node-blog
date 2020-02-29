@@ -1,18 +1,16 @@
 import './index.css'
-import axios from 'axios'
+import { getAxiosData } from '../../common/js/api'
 import $ from 'jquery'
 
 $('.blog-list').click(() => {
-  window.location.href = '/html/blog.html'
+  window.location.href = '/dist/blog.html'
 })
-axios.get('/api/user/loginCheck').then(res => {
-  if (res.data.code === 0) {
-    $('#home h1').text(`您好，${res.data.data.realname || res.data.data.username}`)
-  }
+getAxiosData('user', 'get').then(res => {
+  $('#home h1').text(`您好，${res.realname || res.username}`)
 })
+
 // 获取博客列表
-axios.get('/api/blog/list').then(res => {
-  const list = res.data.data
+getAxiosData('blogList').then(list => {
   for (let i = 0; i < list.length; i++) {
     let dom = `<div class="box">
                   <div class="top">

@@ -1,14 +1,11 @@
 import './index.css'
-import axios from 'axios'
+import { getAxiosData } from '../../common/js/api'
 import $ from 'jquery'
 
-axios.get('/api/user/loginCheck').then(res => {
-  if (res.data.code === 0) {
-    $('#blog h1').text(`您好，${res.data.data.realname || res.data.data.username}`)
-  }
+getAxiosData('user').then(res => {
+  $('#blog h1').text(`您好，${res.realname || res.username}`)
 })
-axios.get('/api/blog/myblog').then(res => {
-  const list = res.data.data
+getAxiosData('myBlogList').then(list => {
   for (let i = 0; i < list.length; i++) {
     let dom = `<div class="box">
                     <div class="top">

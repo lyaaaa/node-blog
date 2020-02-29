@@ -1,63 +1,49 @@
-const handleBlogRouter = require('./router/blog')
-const handleUserRouter = require('./router/user')
-const mime = require('./util/mime')
-// 设置cookie有效时间
-const getCookieExpiress = () => {
-  const d = new Date()
-  d.setTime(d.getTime() + 24 * 60 * 60 * 1000)
-  return d.toGMTString()
-}
-// session 数据
-const SESSION_DATA = {}
+const express = require('express')
+const webpack = require('webpack')
+const webpackDevMiddleware = require('webpack-dev-middleware')
+const webpackHotMiddleware = require('webpack-hot-middleware')
+const WebpackConfig = require('../build/webpack.dev.js')
+const compiler = webpack(WebpackConfig)
+const bodyParser = require('body-parser')
+const app = express()
+const jwt = require('express-jwt')
+const { secretKey } = require('./conf/constant')
+const path = require('path')
+const { verifyToken } = require('./util/token')
 
-const serverHandle = (req, res) => {
-  const url = req.url
-  res.setHeader('Content-type', mime(url))
-  req.path = url.split('?')[0]
-  // 解析cookie
-  req.cookie = {}
-  const cookieStr = req.headers.cookie || ''
-  cookieStr.split(';').forEach(item => {
-    if (!item) return
-    const arr = item.split('=')
-    const key = arr[0].trim()
-    const val = arr[1].trim()
-    req.cookie[key] = val
+app.use(
+  webpackDevMiddleware(compiler, {
+    publicPath: '/dist/'
   })
-  let userId = req.cookie.userid
-  console.log('userId', userId, SESSION_DATA)
-  if (userId) {
-    if (!SESSION_DATA[userId]) {
-      SESSION_DATA[userId] = {}
-    }
-  } else {
-    userId = `${Date.now()}_${Math.random()}`
-    // 设置cookie
-    res.setHeader(
-      'Set-Cookie',
-      `userid=${userId}; path=/; httpOnly; expires=${getCookieExpiress()}`
-    )
-    SESSION_DATA[userId] = {}
-  }
-  req.session = SESSION_DATA[userId]
-  const blogData = handleBlogRouter(req, res)
-  const userData = handleUserRouter(req, res)
-  if (url.match('api')) {
-    if (blogData) {
-      blogData.then(data => {
-        res.end(JSON.stringify(data))
-      })
-      return
-    }
-    if (userData) {
-      userData.then(data => {
-        res.end(JSON.stringify(data))
-      })
-      return
-    }
-  }
-  res.end()
-  // res.end('404 Not Found')
-}
+)
+app.use(webpackHotMiddleware(compiler))
 
-module.exports = serverHandle
+app.use(express.static(path.join(__dirname, '../public')))
+
+// 解析 application/json
+app.use(bodyParser.json())
+// 解析 application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded())
+
+app.use(
+  jwt({
+    secret: secretKey
+  }).unless({
+    path: ['/api/user/login', '/api/user/register', '/api/blog/list', /\.ico$/]
+  })
+)
+
+// 校验token
+app.use(verifyToken)
+
+// 接口
+const userRouter = require('./router/user')
+const blogRouter = require('./router/blog')
+
+app.use(userRouter)
+app.use(blogRouter)
+
+const port = process.env.PORT || 8080
+module.exports = app.listen(port, () => {
+  console.log(`Server listening on http://localhost:${port}, Ctrl+C to stop`)
+})
