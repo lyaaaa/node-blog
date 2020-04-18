@@ -1,0 +1,16 @@
+.detail-box {
+  padding: 30px 0;
+}
+
+.detail-box .author {
+  font-size: 18px;
+  line-height: 22px;
+  color: #666;
+  margin: 12px 0;
+}
+.detail-box .detail-content {
+  font-size: 18px;
+  line-height: 22px;
+  color: #333;
+  text-indent: 25px;
+}

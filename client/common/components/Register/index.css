@@ -1,0 +1,60 @@
+.mask_box {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.mask_box .main {
+  background: #fff;
+  padding: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 12px;
+}
+.main .title {
+  font-weight: bold;
+  font-size: 20px;
+  color: #000;
+  margin-bottom: 15px;
+}
+.main input {
+  width: 250px;
+  height: 40px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  border: none;
+  padding-left: 8px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+.main button {
+  width: 250px;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+  font-weight: bold;
+  font-size: 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+  box-sizing: border-box;
+  margin-top: 10px;
+}
+
+.main .btn-login {
+  background: #007fff;
+  color: #fff;
+}
+
+.main .btn-register {
+  background: #fff;
+  color: #007fff;
+  border: 1px solid #007fff;
+}

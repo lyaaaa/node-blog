@@ -1,35 +1,66 @@
 const path = require('path')
 const fs = require('fs')
 const webpack = require('webpack')
-var HtmlWebpackPlugin = require('html-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const pagesFileName = path.resolve(__dirname, '../client/pages')
 
+// 入口
+const entries = fs.readdirSync(pagesFileName).reduce((entries, dir) => {
+  const fullDir = path.join(pagesFileName, dir)
+  const entry = path.join(fullDir, 'index.js')
+  if (fs.statSync(fullDir).isDirectory() && fs.existsSync(entry)) {
+    entries[dir] = ['webpack-hot-middleware/client', entry]
+  }
+  return entries
+}, {})
+
+const plugins = [
+  new webpack.NoEmitOnErrorsPlugin(),
+  new CleanWebpackPlugin(),
+  new UglifyJsPlugin(),
+  new OptimizeCSSAssetsPlugin({
+    assetNameRegExp: /\.css$/g,
+    cssProcessor: require('cssnano')
+  }),
+  new MiniCssExtractPlugin({
+    filename: 'css/[name].[contenthash:8].css',
+    chunkFilename: 'css/[name].[contenthash:8].css',
+    ignoreOrder: false
+  })
+]
+fs.readdirSync(pagesFileName).forEach(name => {
+  plugins.push(
+    new HtmlWebpackPlugin({
+      template: './public/index.html',
+      filename: name + '.html',
+      chunks: [name, 'manifest', 'vendors', 'common']
+    })
+  )
+})
+
 module.exports = {
-  entry: fs.readdirSync(pagesFileName).reduce((entries, dir) => {
-    const fullDir = path.join(pagesFileName, dir)
-    const entry = path.join(fullDir, 'index.js')
-    if (fs.statSync(fullDir).isDirectory() && fs.existsSync(entry)) {
-      entries[dir] = ['webpack-hot-middleware/client', entry]
-    }
-    return entries
-  }, {}),
+  entry: entries,
   output: {
     path: path.resolve(__dirname, '../dist'),
     filename: 'js/[name].[hash:8].js',
     publicPath: '/dist/'
   },
-
+  resolve: {
+    alias: {
+      '@common': path.resolve(__dirname, '../client/common')
+    }
+  },
   optimization: {
     runtimeChunk: {
       name: 'manifest'
     },
     splitChunks: {
+      chunks: 'all',
       cacheGroups: {
-        chunks: 'async',
         common: {
           name: 'common',
           chunks: 'all',
@@ -39,7 +70,6 @@ module.exports = {
         },
         vendors: {
           name: 'vendors',
-          chunks: 'all',
           priority: 10,
           test: /[\\/]node_modules[\\/]/
         },
@@ -51,45 +81,7 @@ module.exports = {
       }
     }
   },
-  plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    // Use NoErrorsPlugin for webpack 1.x
-    new webpack.NoEmitOnErrorsPlugin(),
-    new CleanWebpackPlugin(),
-    new UglifyJsPlugin(),
-    new OptimizeCSSAssetsPlugin({
-      assetNameRegExp: /\.css$/g,
-      cssProcessor: require('cssnano')
-    }),
-    new HtmlWebpackPlugin({
-      template: './client/pages/blog/index.html',
-      filename: 'blog.html',
-      chunks: ['blog', 'manifest', 'vendors', 'common']
-    }),
-    new HtmlWebpackPlugin({
-      template: './client/pages/login/index.html',
-      filename: 'login.html',
-      minify: {
-        collapseWhitespace: true
-      },
-      chunks: ['login', 'manifest', 'vendors', 'common']
-    }),
-    new HtmlWebpackPlugin({
-      template: './client/pages/home/index.html',
-      filename: 'home.html',
-      chunks: ['home', 'manifest', 'vendors', 'common']
-    }),
-    new HtmlWebpackPlugin({
-      template: './client/pages/register/index.html',
-      filename: 'register.html',
-      chunks: ['register', 'manifest', 'vendors', 'common']
-    }),
-    new MiniCssExtractPlugin({
-      filename: 'css/[name].[contenthash:8].css',
-      chunkFilename: 'css/[name].[contenthash:8].css',
-      ignoreOrder: false
-    })
-  ],
+  plugins,
   module: {
     rules: [
       {
@@ -102,18 +94,7 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader',
-          options: {
-            presets: [
-              [
-                '@babel/preset-env',
-                {
-                  useBuiltIns: 'usage',
-                  corejs: 3
-                }
-              ]
-            ]
-          }
+          loader: 'babel-loader'
         }
       },
       {

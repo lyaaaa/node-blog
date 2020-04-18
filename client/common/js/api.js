@@ -35,9 +35,9 @@ axios.interceptors.response.use(function(response) {
   return data
 })
 
-export const getAxiosData = async (urlName, method = 'GET', data) => {
+export const getAxiosData = async (url, method = 'GET', data) => {
   const axiosData = {
-    url: api[urlName],
+    url,
     method
   }
   if (method === 'GET' || method === 'get') {
@@ -53,3 +53,15 @@ export const getAxiosData = async (urlName, method = 'GET', data) => {
     return res
   }
 }
+
+export const getUserData = () => getAxiosData('/api/user/getUser', 'GET')
+
+export const loginApi = data => getAxiosData('/api/user/login', 'POST', data)
+
+export const registerApi = data => getAxiosData('/api/user/register', 'POST', data)
+
+export const getMyBlogList = () => getAxiosData('/api/blog/myblog', 'GET')
+
+export const getBlogList = () => getAxiosData('/api/blog/list', 'GET')
+
+export const getBlogDetail = id => getAxiosData('/api/blog/detail', 'GET', { id })

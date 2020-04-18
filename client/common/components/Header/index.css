@@ -1,0 +1,39 @@
+#Header {
+  text-align: center;
+  background: #fff;
+  border-bottom: 1px solid #999;
+  padding: 12px 0;
+  margin-bottom: 12px;
+}
+.header_box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.user_box {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+}
+
+.user_box span {
+  cursor: pointer;
+}
+
+.user_box .out_btn {
+  color: #007fff;
+  font-size: 16px;
+  margin-left: 20px;
+  cursor: pointer;
+}
+.use_btn {
+  display: flex;
+  align-items: center;
+}
+.login_btn,
+.register_btn {
+  color: #007fff;
+  font-size: 20px;
+  margin-left: 10px;
+  cursor: pointer;
+}

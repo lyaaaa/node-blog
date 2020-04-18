@@ -1,7 +1,10 @@
 .box {
-  margin-bottom: 12px;
-  border-bottom: 1px solid #333;
-} 
+  padding: 12px 6px;
+  border-bottom: 1px solid #999;
+}
+.box:hover {
+  cursor: pointer;
+}
 .box .top {
   display: flex;
   align-items: center;

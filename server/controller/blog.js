@@ -9,6 +9,11 @@ const getList = (username) => {
   return exec(sql)
 }
 
+const getBlogDetail = (id) => {
+  return exec(`select * from blogs where id='${id}';`)
+}
+
 module.exports = {
-  getList
+  getList,
+  getBlogDetail
 }

@@ -2,7 +2,7 @@
 node开发博客类demo
 
 # 简介
-前端 + node(express) + mysql + webpack (多页面) 开发博客类demo，具有用户注册登陆，发布、查看、编辑博客等功能
+前端(react) + node(express) + mysql + webpack (多页面) 开发博客类demo，具有用户注册登陆，发布、查看、编辑博客等功能
 
 安装依赖并且运行，默认端口  8080
 
@@ -11,4 +11,4 @@ node开发博客类demo
 npm run start
 ```
 
-运行成功后打开 http://localhost:8080/dist/login.html (登录页)
+运行成功后打开 http://localhost:8080/dist/index.html (首页)
