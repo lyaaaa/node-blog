@@ -6,6 +6,9 @@ const commonConfig = require('./webpack.common.js')
 const prodConfig = {
   mode: 'production',
   devtool: 'cheap-module-source-map',
+  optimization: {
+    minimize: true
+  },
   plugins: [
     new BundleAnalyzerPlugin()
   ]

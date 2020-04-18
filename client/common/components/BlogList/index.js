@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import './index.css'
-import { getBlogDetail } from '@common/js/api'
 
 export default class BlogList extends Component {
   constructor(props) {

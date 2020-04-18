@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import './index.css'
+import headerStyle from './index.css'
 import { getUserData } from '@common/js/api'
 import { setStorage } from '@common/js/util'
 import Login from '@common/components/Login'
