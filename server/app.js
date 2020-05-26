@@ -29,7 +29,7 @@ app.use(
   jwt({
     secret: secretKey
   }).unless({
-    path: ['/api/user/login', '/api/user/register', '/api/blog/list', '/api/blog/detail', /\.ico$/, /\.html$/]
+    path: ['/api/user/login', '/api/user/register', '/api/blog/list', '/api/blog/detail', /\.ico$/, /\.html$/, /\.js$/]
   })
 )
 

@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import headerStyle from './index.css'
 import { getUserData } from '@common/js/api'
 import { setStorage } from '@common/js/util'
 import Login from '@common/components/Login'
 import Register from '@common/components/Register'
+import './index.css'
 
 export default class Header extends Component {
   constructor(props) {

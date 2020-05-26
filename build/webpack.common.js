@@ -7,6 +7,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const pagesFileName = path.resolve(__dirname, '../client/pages')
+const AddAssetHtmlWebpackPlugin = require('add-asset-html-webpack-plugin')
 
 // 入口
 const entries = fs.readdirSync(pagesFileName).reduce((entries, dir) => {
@@ -20,7 +21,13 @@ const entries = fs.readdirSync(pagesFileName).reduce((entries, dir) => {
 
 const plugins = [
   new webpack.NoEmitOnErrorsPlugin(),
-  new CleanWebpackPlugin(),
+  new CleanWebpackPlugin({
+    cleanOnceBeforeBuildPatterns: ['**/*', '!dll', '!dll/**']
+  }),
+  new webpack.DllReferencePlugin({
+    manifest: path.resolve(__dirname, '../dist', 'dll', 'manifest.json'),
+    context: path.resolve(__dirname, '../dist')
+  }),
   new UglifyJsPlugin(),
   new OptimizeCSSAssetsPlugin({
     assetNameRegExp: /\.css$/g,
@@ -41,6 +48,11 @@ fs.readdirSync(pagesFileName).forEach(name => {
     })
   )
 })
+plugins.push(
+  new AddAssetHtmlWebpackPlugin({
+    filepath: path.resolve(__dirname, '../dist/dll/react.dll.js')
+  })
+)
 
 module.exports = {
   entry: entries,

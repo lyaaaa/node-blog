@@ -9,7 +9,7 @@ export const setStorage = (key, val) => {
 export const getStorage = key => {
   const item = window.localStorage.getItem(key) || ''
   try {
-    const obj = JSON.parse(objStr)
+    const obj = JSON.parse(item)
     return obj
   } catch (err) {
     return item

@@ -1,14 +1,6 @@
 import axios from 'axios'
 import { getStorage } from './util'
 
-const api = {
-  login: '/api/user/login',
-  user: '/api/user/getUser',
-  register: '/api/user/register',
-  blogList: '/api/blog/list',
-  myBlogList: '/api/blog/myblog'
-}
-
 // 请求拦截器
 axios.interceptors.request.use(
   function(config) {
