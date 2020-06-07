@@ -1,0 +1,37 @@
+@color-button: #007fff;
+
+body, html {
+  margin: 0;
+  padding: 0;
+}
+input {
+  border: none;
+  outline: none;
+}
+.main_width {
+  width: 960px;
+  margin: 0 auto;
+}
+h1, h2, h3 {
+  margin: 0;
+  padding: 0;
+}
+
+.edit-box {
+  display: flex;
+  align-items: center;
+  .editor {
+    color: @color-button;
+    margin-right: 12px;
+    &:hover {
+      text-decoration: underline;
+      font-weight: bold;
+    }
+  }
+  .delete {
+    color: #999;
+    &:hover {
+      color: @color-button;
+    }
+  }
+}

@@ -1,3 +1,5 @@
+@import '~@common/css/common.less';
+
 .detail-box {
   padding: 30px 0;
 }

@@ -5,21 +5,37 @@ export default class BlogList extends Component {
   constructor(props) {
     super(props)
     this.state = {}
-
-    this.getDetail = this.getDetail.bind(this)
   }
   async getDetail(id) {
     window.location.href = `/dist/detail.html?id=${id}`
   }
+  handleEditor(id, e) {
+    e.stopPropagation()
+    window.location.href = `/dist/editor.html?id=${id}`
+  }
+  handleDelete(id, e) {
+    e.stopPropagation()
+    console.log('handleDelete', id)
+  }
 
   render() {
-    const { list } = this.props
+    const { list, isEdit } = this.props
 
     const listItems = list.map(item => (
-      <div className="box" key={item.id} onClick={() => this.getDetail(item.id)}>
+      <div
+        className="box"
+        key={item.id}
+        onClick={() => this.getDetail(item.id)}
+      >
         <div className="top">
-          <div className="title">{item.title}</div>
-          <div className="author">作者：{item.author}</div>
+          <div>
+            <div className="title">{item.title}</div>
+            <div className="author">作者：{item.author}</div>
+          </div>
+          {isEdit && <div className="edit-box">
+            <div className="editor" onClick={(e) => this.handleEditor(item.id, e)}>编辑</div>
+            <div className="delete" onClick={(e) => this.handleDelete(item.id, e)}>删除</div>
+          </div>}
         </div>
         <div className="content">{item.content}</div>
       </div>

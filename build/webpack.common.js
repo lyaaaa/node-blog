@@ -40,11 +40,18 @@ const plugins = [
   })
 ]
 fs.readdirSync(pagesFileName).forEach(name => {
+  const title = {
+    blog: '我的博客',
+    detail: '博客详情',
+    index: '博客列表',
+    editor: '编辑'
+  }
   plugins.push(
     new HtmlWebpackPlugin({
       template: './public/index.html',
       filename: name + '.html',
-      chunks: [name, 'manifest', 'vendors', 'common']
+      chunks: [name, 'manifest', 'vendors', 'common'],
+      title: title[name]
     })
   )
 })
@@ -110,7 +117,7 @@ module.exports = {
         }
       },
       {
-        test: /\.css$/i,
+        test: /\.(css|less)$/i,
         use: [
           {
             loader: MiniCssExtractPlugin.loader,
@@ -119,7 +126,8 @@ module.exports = {
             }
           },
           { loader: 'css-loader', options: { importLoaders: 1 } },
-          'postcss-loader'
+          'postcss-loader',
+          'less-loader'
         ]
       }
     ]

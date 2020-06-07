@@ -1,0 +1,48 @@
+@import '~@common/css/common.less';
+
+.editor-main {
+  padding-top: 63px;
+}
+
+#editor-box-wrapper {
+  position: fixed;
+  top: 63px;
+  width: 100%;
+  padding-top: 49px;
+  .editor-toolbar {
+    width: 100%;
+    position: absolute;
+    top: 0;
+  }
+  .CodeMirror-fullscreen {
+    padding-top: 60px;
+  }
+}
+
+.editor-top {
+  padding: 0 20px;
+  height: 63px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  box-sizing: border-box;
+  input {
+    height: 63px;
+    font-weight: bold;
+    color: #333;
+    font-size: 20px;
+  }
+  .top-right {
+    .save-btn {
+      color: @color-button;
+      &:hover {
+        text-decoration: underline;
+        font-weight: bold;
+        cursor: pointer;
+      }
+    }
+  }
+}

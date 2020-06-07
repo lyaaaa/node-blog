@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import '@common/css/common.css'
 import './App.css'
 import { getBlogList } from '@common/js/api'
 import Header from '@common/components/Header'

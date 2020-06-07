@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import '@common/css/common.css'
 import './App.css'
 import { getQuery } from '@common/js/util'
 import { getBlogDetail } from '@common/js/api'

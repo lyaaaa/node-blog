@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import '@common/css/common.css'
 import './App.css'
 import { getMyBlogList } from '@common/js/api'
 import Header from '@common/components/Header'
@@ -32,7 +31,7 @@ class App extends Component {
     return (
       <div className="App">
         <Header></Header>
-        <BlogList list={blogList}></BlogList>
+        <BlogList list={blogList} isEdit={true}></BlogList>
       </div>
     )
   }
