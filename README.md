@@ -11,4 +11,4 @@ node开发博客类demo
 npm run start
 ```
 
-运行成功后打开 http://localhost:8080/dist/index.html (首页)
+运行成功后打开 http://localhost:8080/dist/index.html. (首页)
