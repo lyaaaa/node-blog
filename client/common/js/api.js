@@ -57,3 +57,5 @@ export const getMyBlogList = () => getAxiosData('/api/blog/myblog', 'GET')
 export const getBlogList = () => getAxiosData('/api/blog/list', 'GET')
 
 export const getBlogDetail = id => getAxiosData('/api/blog/detail', 'GET', { id })
+
+export const addBlog = data => getAxiosData('/api/blog/add', 'POST', data)

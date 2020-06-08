@@ -27,13 +27,19 @@ class App extends Component {
     return (
       <div className="App">
         <Header></Header>
-        {blogDetail &&
-         <div className="detail-box main_width">
-           <h1 className="title">{blogDetail.title}</h1>
-           <div className="author">作者：{blogDetail.author}</div>
-           <div className="detail-content">{blogDetail.content}</div>
-         </div>
-        }
+        {blogDetail && (
+          <div className="detail-box main_width">
+            <h1 className="title">{blogDetail.title}</h1>
+            <div className="author">作者：{blogDetail.author}</div>
+            {!!blogDetail.contentHtml ? (
+              <div
+                dangerouslySetInnerHTML={{ __html: blogDetail.contentHtml }}
+              ></div>
+            ) : (
+              <div className="detail-content">{blogDetail.content}</div>
+            )}
+          </div>
+        )}
       </div>
     )
   }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import './App.less'
 import { getQuery } from '@common/js/util'
-import { getBlogDetail } from '@common/js/api'
+import { getBlogDetail, addBlog } from '@common/js/api'
 import SimpleMDE from 'react-simplemde-editor'
 import 'easymde/dist/easymde.min.css'
 
@@ -10,7 +10,8 @@ class App extends Component {
     super()
     this.state = {
       blogDetail: {},
-      value: ''
+      value: '',
+      EasyMDE: {}
     }
   }
 
@@ -19,8 +20,22 @@ class App extends Component {
       value
     })
   }
-  hanldSave() {
-    console.log('save', this.state.value)
+  async hanldSave() {
+    const { blogDetail, value, EasyMDE } = this.state
+
+    if (blogDetail.id) {
+      console.log('修改博客信息')
+    } else {
+      const res = await addBlog({
+        title: blogDetail.title,
+        content: value,
+        contentHtml: EasyMDE.markdown(value)
+      })
+      if (res) {
+        alert('新建博客成功')
+        window.history.go(-1)
+      }
+    }
   }
 
   handleTitle(event) {
@@ -28,6 +43,12 @@ class App extends Component {
     blogDetail.title = event.target.value
     this.setState({
       blogDetail
+    })
+  }
+
+  getInsance(instance) {
+    this.setState({
+      EasyMDE: instance
     })
   }
 
@@ -69,6 +90,7 @@ class App extends Component {
         </div>
         <SimpleMDE
           id="editor-box"
+          getMdeInstance= {instance => this.getInsance(instance) }
           value={value}
           options={options}
           onChange={value => this.handleChange(value)}

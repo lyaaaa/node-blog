@@ -13,7 +13,12 @@ const getBlogDetail = (id) => {
   return exec(`select * from blogs where id='${id}';`)
 }
 
+const addBlog = ({ title, content, contentHtml, createtime, author }) => {
+  return exec(`insert into blogs (title, content, contentHtml, createtime, author) values ('${title}', '${content}', '${contentHtml}', '${createtime}', '${author}');`)
+}
+
 module.exports = {
   getList,
-  getBlogDetail
+  getBlogDetail,
+  addBlog
 }
